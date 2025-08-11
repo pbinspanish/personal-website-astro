@@ -1,0 +1,27 @@
+---
+import Base from "../components/Base.astro";
+---
+
+<Base lang="en">
+  <div
+    class="flex-1 items-stretch bg-[url('/images/hero.jpg')] bg-cover bg-[17%_40%] bg-no-repeat"
+  >
+    <div class="container mx-auto flex h-full items-stretch">
+      <div class="flex w-full items-end justify-end lg:items-center">
+        <div
+          class="bg-paper mx-8 mb-12 w-full rounded-lg p-8 shadow-lg lg:w-1/2 dark:bg-black"
+        >
+          <h1 class="mb-4 text-4xl font-bold">404</h1>
+          <p class="mb-2 text-xl">
+            Sorry, but that page doesn't seem to exist. Instead, check out one
+            of the posts on my
+            <a
+              class="underline transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+              href="/blog/">blog</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
