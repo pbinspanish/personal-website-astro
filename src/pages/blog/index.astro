@@ -1,5 +1,6 @@
 ---
 import BaseCenteredTitle from "../../components/BaseCenteredTitle.astro";
+import BlogPostList from "../../components/BlogPostList.astro";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("blog")).sort(
@@ -12,33 +13,5 @@ const title = "Blog";
 ---
 
 <BaseCenteredTitle title={title} lang="en">
-  {
-    posts.map((post) => (
-      <div class="flex flex-col">
-        <a
-          href={`/blog/${post.id}/`}
-          title={post.data.title}
-          class="text-decoration-none text-semibold mb-1 flex flex-row items-center text-xl transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
-        >
-          {post.data.title}
-        </a>
-        <div class="mb-6 flex flex-row items-center">
-          <span class="text-base-600 dark:text-base-500 text-md font-fira me-4 justify-self-end text-base">
-            {post.data.date === undefined
-              ? ""
-              : post.data.date.toISOString().split("T")[0]}
-          </span>
-          {post.data.tags.map((tag) => (
-            <a
-              href="TODO"
-              title={tag}
-              class="text-base-400 dark:text-base-500 hover:text-base-700 hover:dark:text-base-300 me-2 text-sm"
-            >
-              #{tag}
-            </a>
-          ))}
-        </div>
-      </div>
-    ))
-  }
+  <BlogPostList posts={posts} />
 </BaseCenteredTitle>

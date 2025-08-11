@@ -1,0 +1,16 @@
+---
+import BaseCenteredTitle from "../../components/BaseCenteredTitle.astro";
+import Tag from "../../components/Tag.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+
+console.log(tags);
+
+const title = `Tags`;
+---
+
+<BaseCenteredTitle title={title} lang="en">
+  {tags.map((tag) => <Tag tag={tag} />)}
+</BaseCenteredTitle>

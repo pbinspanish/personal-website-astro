@@ -1,0 +1,27 @@
+---
+import BaseCenteredTitle from "../../components/BaseCenteredTitle.astro";
+import BlogPostList from "../../components/BlogPostList.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  // get a list of all unique tags from the blog posts
+  const posts = await getCollection("blog");
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+
+  return tags.map((tag) => {
+    const tagPosts = posts.filter((p) => p.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { tag, posts: tagPosts },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+
+const title = `Tag: #${tag}`;
+---
+
+<BaseCenteredTitle title={title} lang="en">
+  <BlogPostList posts={posts} />
+</BaseCenteredTitle>

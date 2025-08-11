@@ -1,0 +1,29 @@
+---
+import Tag from "./Tag.astro";
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.map((post) => (
+    <div class="flex flex-col">
+      <a
+        href={`/blog/${post.id}/`}
+        title={post.data.title}
+        class="text-decoration-none text-semibold mb-1 flex flex-row items-center text-xl transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+      >
+        {post.data.title}
+      </a>
+      <div class="mb-6 flex flex-row items-center">
+        <span class="text-base-600 dark:text-base-500 text-md font-fira me-4 justify-self-end text-base">
+          {post.data.date === undefined
+            ? ""
+            : post.data.date.toISOString().split("T")[0]}
+        </span>
+        {post.data.tags.map((tag) => (
+          <Tag tag={tag} />
+        ))}
+      </div>
+    </div>
+  ))
+}
