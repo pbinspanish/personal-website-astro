@@ -3,11 +3,13 @@ import BaseCenteredTitle from "../../components/BaseCenteredTitle.astro";
 import BlogPostList from "../../components/BlogPostList.astro";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) =>
-    (b.data.date === undefined ? 0 : b.data.date.valueOf()) -
-    (a.data.date === undefined ? 0 : a.data.date.valueOf()),
-);
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort(
+    (a, b) =>
+      (b.data.date === undefined ? 0 : b.data.date.valueOf()) -
+      (a.data.date === undefined ? 0 : a.data.date.valueOf()),
+  );
 
 const title = "Blog";
 ---
