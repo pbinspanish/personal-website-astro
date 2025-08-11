@@ -1,0 +1,17 @@
+---
+import Base from "../components/Base.astro";
+import Centered from "../components/Centered.astro";
+
+interface Props {
+  page_title: string;
+  lang: string;
+}
+
+const { page_title, lang } = Astro.props;
+---
+
+<Base page_title={page_title} lang={lang}>
+  <Centered>
+    <slot />
+  </Centered>
+</Base>

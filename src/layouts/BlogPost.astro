@@ -11,7 +11,7 @@ const { title, date, language, tags, draft } = Astro.props;
 <BaseCenteredTitle title={title} lang={language}>
   <!-- Metadata -->
   <div
-    class={(date === undefined ? "hideen" : "") +
+    class={(date === undefined ? "hidden" : "") +
       " text-base-600 dark:text-base-500 mb-12"}
   >
     {
@@ -28,7 +28,7 @@ const { title, date, language, tags, draft } = Astro.props;
   <!-- Content -->
   <div
     id="content"
-    class="text-justify text-lg/6 text-pretty hyphens-auto md:text-xl/7"
+    class="mb-12 text-justify text-lg/6 text-pretty hyphens-auto md:text-xl/7"
   >
     <slot />
   </div>

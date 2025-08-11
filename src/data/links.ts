@@ -1,6 +1,5 @@
-import { type LinkProps } from "../../components/react/Link";
-
 import {
+  type Icon as IconType,
   Mail,
   Github,
   BookText,
@@ -9,7 +8,14 @@ import {
   Linkedin,
   Film,
   Youtube,
-} from "lucide-react";
+} from "@lucide/astro";
+
+export interface LinkProps {
+  icon: typeof IconType;
+  title: string;
+  description: string;
+  url: string;
+}
 
 export const LinkData: LinkProps[] = [
   {
@@ -25,10 +31,10 @@ export const LinkData: LinkProps[] = [
     url: "https://www.github.com/pbinspanish",
   },
   {
-    icon: BookText,
-    title: "Goodreads",
-    description: "Everything I've read, am reading, and want to read.",
-    url: "https://www.goodreads.com/mantecademani",
+    icon: Linkedin,
+    title: "Linkedin",
+    description: "My resume and connections.",
+    url: "https://www.linkedin.com/in/josiahhenson",
   },
   {
     icon: Instagram,
@@ -37,16 +43,16 @@ export const LinkData: LinkProps[] = [
     url: "https://www.instagram.com/pbinspanish",
   },
   {
+    icon: BookText,
+    title: "Goodreads",
+    description: "Everything I've read, am reading, and want to read.",
+    url: "https://www.goodreads.com/mantecademani",
+  },
+  {
     icon: AudioLines,
     title: "Last.fm",
     description: "Everything I'm listening to.",
     url: "https://www.last.fm/user/mantecademani",
-  },
-  {
-    icon: Linkedin,
-    title: "Linkedin",
-    description: "My resume and connections.",
-    url: "https://www.linkedin.com/in/josiahhenson",
   },
   {
     icon: Film,

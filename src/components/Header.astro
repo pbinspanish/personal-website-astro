@@ -1,6 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import MobileHeaderLink from "./MobileHeaderLink.astro";
+import Centered from "./Centered.astro";
 
 import ThemePicker from "./react/ThemePicker.jsx";
 
@@ -8,8 +9,8 @@ import { Menu, X } from "@lucide/astro";
 ---
 
 <nav class="bg-paper sticky top-0 z-50 w-full py-0 dark:bg-black">
-  <div class="mx-auto w-full max-w-3xl">
-    <div class="mx-8 flex items-stretch">
+  <Centered>
+    <div class="flex items-stretch">
       <a class="flex grow items-center no-underline" href="/">
         <h5
           class="mb-0 py-2 text-lg font-bold transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
@@ -23,7 +24,6 @@ import { Menu, X } from "@lucide/astro";
           <HeaderLink href="/blog">Blog</HeaderLink>
           <HeaderLink href="/photography">Photography</HeaderLink>
           <HeaderLink href="/about">About</HeaderLink>
-          <HeaderLink href="/links">Links</HeaderLink>
         </ul>
       </div>
 
@@ -42,14 +42,13 @@ import { Menu, X } from "@lucide/astro";
         </button>
       </div>
     </div>
-  </div>
+  </Centered>
 
   <div class="mx-auto hidden max-w-xl md:hidden" id="mobile-menu">
     <div class="mx-8 space-y-1 pt-2 pb-3">
       <MobileHeaderLink href="/blog">Blog</MobileHeaderLink>
       <MobileHeaderLink href="/photography">Photography</MobileHeaderLink>
       <MobileHeaderLink href="/about">About</MobileHeaderLink>
-      <MobileHeaderLink href="/links">Links</MobileHeaderLink>
     </div>
   </div>
 </nav>
