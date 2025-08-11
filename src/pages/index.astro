@@ -1,11 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Base from "../components/Base.astro";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<Base lang="en">
+  <div
+    class="flex-1 items-stretch bg-[url('/images/hero.jpg')] bg-cover bg-[17%_40%] bg-no-repeat"
+  >
+    <div class="container mx-auto flex h-full items-stretch">
+      <div class="flex w-full items-end justify-end lg:items-center">
+        <div
+          class="bg-paper mx-8 mb-12 w-full rounded-lg p-8 shadow-lg lg:w-1/2 dark:bg-black"
+        >
+          <h1 class="mb-4 text-4xl font-bold">Josiah Henson</h1>
+          <p class="mb-2 text-xl">
+            I'm a Computer Science graduate from the University of Windsor who
+            has a passion for technology, software, and creating useful things.
+            I'm always looking for opportunities to help people solve real
+            problems through the software I create, and it's even better if I
+            get to chew on a fun technical problem to get there. Outside of
+            tech, I love reading, being behind a camera, on my bike, or playing
+            soccer. I'm constantly looking for opportunities to improve myself
+            physically and mentally, and to connect and share with others.
+          </p>
+
+          <p class="text-xl">
+            I'm open for software development related positions. If you have
+            something you think I would be a good fit for, feel free to reach
+            out to my email
+            <a
+              class="underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+              href="mailto:JosiahJ.H@outlook.com">here</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

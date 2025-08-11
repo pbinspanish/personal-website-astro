@@ -1,0 +1,70 @@
+---
+const today = new Date();
+
+import { Mail, Linkedin, Github, Ellipsis } from "@lucide/astro";
+---
+
+<div
+  class="bg-base-50 dark:bg-base-950 mt-auto flex w-full justify-center pt-6 pb-8"
+>
+  <div class="mx-8 w-full max-w-md md:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
+    <div class="flex justify-center pt-3">
+      <a
+        href="mailto:JosiahJ.H@outlook.com"
+        target="_blank"
+        title="Email"
+        class="text-decoration-none px-2"
+      >
+        <Mail
+          class="h-5 w-5 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600"
+        />
+      </a>
+      <a
+        href="https://www.linkedin.com/in/josiahhenson"
+        target="_blank"
+        title="LinkedIn"
+        class="text-decoration-none px-2"
+      >
+        <Linkedin
+          class="h-5 w-5 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600"
+        />
+      </a>
+      <a
+        href="https://www.github.com/pbinspanish"
+        target="_blank"
+        title="GitHub"
+        class="text-decoration-none px-2"
+      >
+        <Github
+          class="h-5 w-5 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600"
+        />
+      </a>
+      <a href="/links" title="More" class="text-decoration-none px-2">
+        <Ellipsis
+          class="h-5 w-5 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600"
+        />
+      </a>
+    </div>
+    <div class="flex justify-center">
+      <span class="mb-0 py-3 text-center">
+        Copyright © {today.getFullYear()} Josiah Henson. Built using
+        <a
+          class="underline transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="https://astro.build/"
+          target="_blank">Astro</a
+        >
+        and
+        <a
+          class="underline transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="https://tailwindcss.com/"
+          target="_blank">Tailwind</a
+        >. Icons from
+        <a
+          class="underline transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="https://lucide.dev"
+          target="_blank">Lucide</a
+        >.
+      </span>
+    </div>
+  </div>
+</div>

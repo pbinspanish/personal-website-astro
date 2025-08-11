@@ -1,0 +1,34 @@
+---
+import BaseCenteredTitle from "../../components/BaseCenteredTitle.astro";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const title = "Blog";
+---
+
+<BaseCenteredTitle title={title} lang="en">
+  {
+    posts.map((post) => (
+      <div class="mb-3 flex items-center">
+        <a
+          href={`/blog/${post.id}/`}
+          title={post.data.title}
+          class="text-decoration-none flex flex-col items-start transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+        >
+          <div class="flex flex-row items-center">
+            <span class="text-base-600 dark:text-base-500 text-md me-4">
+              <FormattedDate date={post.data.pubDate} />
+            </span>
+            <span class="flex flex-col">
+              <span class="text-semibold text-xl">{post.data.title}</span>
+            </span>
+          </div>
+        </a>
+      </div>
+    ))
+  }
+</BaseCenteredTitle>

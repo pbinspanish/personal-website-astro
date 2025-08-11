@@ -1,0 +1,160 @@
+---
+import path from "node:path";
+
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { undefined } from "astro:schema";
+
+import Base from "../../components/Base.astro";
+
+export async function getStaticPaths() {
+  const images = import.meta.glob<{ default: ImageMetadata }>(
+    "/src/content/photography/**/*.{jpg,jpeg}",
+  );
+
+  const albums = new Map<
+    string,
+    {
+      images: { originalPath: string; metadata: ImageMetadata }[];
+      subAlbums: Set<string>;
+    }
+  >();
+
+  for (const imagePath in images) {
+    const imageData = await images[imagePath]();
+
+    // "/src/content/photography/2025/2025-06-20 - Luke's Grad/P1160636.jpg"
+    // -> ["2025", "2025-06-20 - Luke's Grad", "P1160636.jpg"]
+    const albumPathParts = imagePath.split("/").slice(4);
+    const imageFileName = albumPathParts.pop();
+    const albumSlug = albumPathParts.join("/");
+
+    // Get or update information about the current album
+    let currentAlbumData = albums.get(albumSlug);
+    if (!currentAlbumData) {
+      currentAlbumData = { images: [], subAlbums: new Set() };
+      albums.set(albumSlug, currentAlbumData);
+    }
+    currentAlbumData.images.push({
+      originalPath: imagePath,
+      metadata: imageData.default,
+    });
+
+    // Register the album with its parent(s)
+    while (albumPathParts.length > 0) {
+      const parentSlug = albumPathParts.slice(0, -1).join("/");
+      let parentAlbumData = albums.get(parentSlug);
+      if (!parentAlbumData) {
+        parentAlbumData = { images: [], subAlbums: new Set() };
+        albums.set(parentSlug, parentAlbumData);
+      }
+
+      parentAlbumData.subAlbums.add(albumPathParts[albumPathParts.length - 1]);
+
+      albumPathParts.pop();
+    }
+  }
+  const pages = [];
+  for (const [slug, data] of albums.entries()) {
+    const albumName = slug.split("/").pop() || "Main Gallery";
+
+    pages.push({
+      params: { slug: slug || undefined },
+      props: {
+        albumName: albumName,
+        images: data.images,
+        subAlbums: Array.from(data.subAlbums).map((name) => ({
+          name: name,
+          url: `/photography/${path.posix.join(slug, name)}`,
+        })),
+      },
+    });
+  }
+
+  return pages;
+}
+
+interface Props {
+  albumName: string;
+  images: {
+    originalPath: string;
+    metadata: ImageMetadata;
+  }[];
+  subAlbums: { name: string; url: string }[];
+}
+
+const { albumName, images, subAlbums } = Astro.props;
+---
+
+<Base lang="en">
+  <div class="w-full">
+    <div class="mx-auto w-full max-w-3xl">
+      <div class="mx-8">
+        <!-- Title -->
+        <h1 class="mt-12 mb-6 text-4xl font-bold">{albumName}</h1>
+        <div class="mx-auto mb-12 grid max-w-7xl grid-cols-1 gap-x-6 gap-y-8">
+          {
+            subAlbums.length > 0 && (
+              <>
+                {subAlbums.map((album) => (
+                  <a
+                    class="flex flex-col rounded-2xl"
+                    href={album.url}
+                    title={album.name}
+                  >
+                    <figure class="aspect-3/2 w-full rounded-2xl">
+                      <img
+                        class="aspect-3/2 w-full overflow-hidden rounded-2xl object-cover"
+                        src="THUMBNAIL LINK"
+                      />
+                    </figure>
+                    <div class="flex shrink-1 grow-1 basis-auto flex-col gap-3 p-4">
+                      <h2 class="text-lg/5 font-bold">{album.name}</h2>
+                      <span class="text-base-600 dark:text-base-500 text-sm/6">
+                        10 photos OR 120 photos in 3 albums
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </>
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mx-auto w-11/12">
+      <div id="gallery" class="z-0 mb-12">
+        {
+          images.map((image) => (
+            <a
+              href={image.originalPath}
+              class="gallery-item flex flex-col rounded-md"
+              data-pswp-width={image.metadata.width}
+              data-pswp-height={image.metadata.height}
+              itemscope
+              itemtype="https://schema.org/ImageObject"
+              style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
+            >
+              <figure
+                class="rounded-md"
+                style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
+              >
+                <Image
+                  class="rounded-md"
+                  src={image.metadata}
+                  alt={`Image in ${albumName}`}
+                  loading="lazy"
+                  decoding="async"
+                  width={600}
+                  style="width: 100%; height: auto"
+                />
+              </figure>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+  <script src="../../scripts/post.js"></script>
+</Base>

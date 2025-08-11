@@ -1,0 +1,23 @@
+---
+import Base from "../components/Base.astro";
+
+interface Props {
+  title: string;
+  lang: string;
+}
+
+const { title, lang } = Astro.props;
+---
+
+<Base page_title={title} lang={lang}>
+  <div class="h-full w-full">
+    <div class="mx-auto w-full max-w-3xl">
+      <div class="mx-8 my-12">
+        <!-- Title -->
+        <h1 class="mb-6 text-4xl font-bold">{title}</h1>
+
+        <slot />
+      </div>
+    </div>
+  </div>
+</Base>

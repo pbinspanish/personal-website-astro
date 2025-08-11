@@ -1,0 +1,29 @@
+---
+import BaseCenteredTitle from "../components/BaseCenteredTitle.astro";
+
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, showDate, updatedDate, heroImage } =
+  Astro.props;
+---
+
+<BaseCenteredTitle title={title} lang="en">
+  <!-- Metadata -->
+  <div
+    class={(showDate ? "" : "hidden") +
+      " text-base-600 dark:text-base-500 mb-12"}
+  >
+    <FormattedDate date={pubDate} />
+  </div>
+
+  <!-- Content -->
+  <div
+    id="content"
+    class="text-justify text-lg/6 text-pretty hyphens-auto md:text-xl/7"
+  >
+    <slot />
+  </div>
+</BaseCenteredTitle>

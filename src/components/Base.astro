@@ -1,0 +1,38 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
+interface Props {
+  page_title?: string;
+  lang: string;
+}
+
+const { page_title = "", lang } = Astro.props;
+
+// Set up page title
+let title = "";
+if (page_title === "") {
+  title = SITE_TITLE;
+} else {
+  title = SITE_TITLE + " | " + page_title;
+}
+---
+
+<!doctype html>
+<html
+  class="font-inter dark:text-base-200 bg-paper text-black selection:bg-cyan-100 dark:bg-black dark:selection:bg-cyan-800"
+  lang={lang}
+>
+  <head>
+    <BaseHead title={title} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <div class="flex min-h-[calc(100vh-48px)]">
+      <slot />
+    </div>
+    <Footer />
+  </body>
+</html>
