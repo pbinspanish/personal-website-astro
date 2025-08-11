@@ -8,17 +8,18 @@ const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      description: z.string(),
-      // Transform string to Date object
-      pubDate: z.coerce.date(),
-      showDate: z.coerce.boolean(),
-      updatedDate: z.coerce.date().optional(),
-      heroImage: image().optional(),
+      date: z.coerce.date().optional(),
+      language: z.enum(["en", "es"]),
+      tags: z.array(z.string()),
+      draft: z.boolean(),
     }),
 });
 
 const photography = defineCollection({
-  loader: glob({ base: "./src/content/photography", pattern: "**/*.{.jpg,.jpeg,.png}"})
+  loader: glob({
+    base: "./src/content/photography",
+    pattern: "**/*.{.jpg,.jpeg,.png}",
+  }),
 });
 
 export const collections = { blog };

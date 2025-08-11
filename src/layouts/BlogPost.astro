@@ -2,21 +2,27 @@
 import BaseCenteredTitle from "../components/BaseCenteredTitle.astro";
 
 import type { CollectionEntry } from "astro:content";
-import FormattedDate from "../components/FormattedDate.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, showDate, updatedDate, heroImage } =
-  Astro.props;
+const { title, date, language, tags, draft } = Astro.props;
 ---
 
-<BaseCenteredTitle title={title} lang="en">
+<BaseCenteredTitle title={title} lang={language}>
   <!-- Metadata -->
   <div
-    class={(showDate ? "" : "hidden") +
+    class={(date === undefined ? "hideen" : "") +
       " text-base-600 dark:text-base-500 mb-12"}
   >
-    <FormattedDate date={pubDate} />
+    {
+      date === undefined
+        ? ""
+        : date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+    }
   </div>
 
   <!-- Content -->

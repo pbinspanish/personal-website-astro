@@ -1,8 +1,10 @@
 ---
 title: What does it mean to be fluent in a language?
-description: "Lorem ipsum dolor sit amet"
-pubDate: "Aug 01 2025"
-showDate: true
+date: 2025-08-01
+language: en
+tags:
+  - language
+draft: false
 ---
 
 I recently stumbled across [this](https://www.bbc.com/future/article/20190903-linguistic-fluency-proficiency-second-language-learning) article written by Eva Sandoval for the BBC, and I feel it sums up my feelings on language fluency almost exactly. I think people generally have a picture of what it means to be fluent in a language, given pretty well every adult on the planet could be considered fluent in at least one language. The interesting thing to me is at what point in someone's language development do they become a fluent user of the language? What are the qualities that we look for in fluent users of language?
