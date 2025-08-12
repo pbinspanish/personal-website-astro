@@ -31,7 +31,9 @@ if (page_title === "") {
   <body>
     <Header />
     <div class="flex min-h-[calc(100vh-48px)]">
-      <slot />
+      <div class="w-full">
+        <slot />
+      </div>
     </div>
     <Footer />
   </body>

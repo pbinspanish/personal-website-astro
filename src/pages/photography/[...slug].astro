@@ -3,9 +3,10 @@ import path from "node:path";
 
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import { undefined } from "astro:schema";
 
 import Base from "../../components/Base.astro";
+import Centered from "../../components/Centered.astro";
+import Title from "../../components/Title.astro";
 
 export async function getStaticPaths() {
   const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -56,7 +57,7 @@ export async function getStaticPaths() {
   }
   const pages = [];
   for (const [slug, data] of albums.entries()) {
-    const albumName = slug.split("/").pop() || "Main Gallery";
+    const albumName = slug.split("/").pop() || "Photography";
 
     pages.push({
       params: { slug: slug || undefined },
@@ -86,74 +87,69 @@ interface Props {
 const { albumName, images, subAlbums } = Astro.props;
 ---
 
-<Base lang="en">
-  <div class="w-full">
-    <div class="mx-auto w-full max-w-3xl">
-      <div class="mx-8">
-        <!-- Title -->
-        <h1 class="mt-12 mb-6 text-4xl font-bold">{albumName}</h1>
-        <div class="mx-auto mb-12 grid max-w-7xl grid-cols-1 gap-x-6 gap-y-8">
-          {
-            subAlbums.length > 0 && (
-              <>
-                {subAlbums.map((album) => (
-                  <a
-                    class="flex flex-col rounded-2xl"
-                    href={album.url}
-                    title={album.name}
-                  >
-                    <figure class="aspect-3/2 w-full rounded-2xl">
-                      <img
-                        class="aspect-3/2 w-full overflow-hidden rounded-2xl object-cover"
-                        src="THUMBNAIL LINK"
-                      />
-                    </figure>
-                    <div class="flex shrink-1 grow-1 basis-auto flex-col gap-3 p-4">
-                      <h2 class="text-lg/5 font-bold">{album.name}</h2>
-                      <span class="text-base-600 dark:text-base-500 text-sm/6">
-                        10 photos OR 120 photos in 3 albums
-                      </span>
-                    </div>
-                  </a>
-                ))}
-              </>
-            )
-          }
-        </div>
-      </div>
+<Base page_title={albumName} lang="en">
+  <Centered>
+    <Title title={albumName} />
+    <div class="mx-auto mb-12 grid max-w-7xl grid-cols-2 gap-x-6 gap-y-8">
+      {
+        subAlbums.length > 0 && (
+          <>
+            {subAlbums.map((album) => (
+              <a
+                class="flex flex-col rounded-2xl"
+                href={album.url}
+                title={album.name}
+              >
+                <figure class="aspect-3/2 w-full rounded-2xl">
+                  <img
+                    class="aspect-3/2 w-full overflow-hidden rounded-2xl object-cover"
+                    src="THUMBNAIL LINK"
+                  />
+                </figure>
+                <div class="flex shrink-1 grow-1 basis-auto flex-col gap-3 p-4">
+                  <h2 class="text-lg/5 font-bold">{album.name}</h2>
+                  <span class="text-base-600 dark:text-base-500 text-sm/6">
+                    10 photos OR 120 photos in 3 albums
+                  </span>
+                </div>
+              </a>
+            ))}
+          </>
+        )
+      }
     </div>
+  </Centered>
 
-    <div class="mx-auto w-11/12">
-      <div id="gallery" class="z-0 mb-12">
-        {
-          images.map((image) => (
-            <a
-              href={image.originalPath}
-              class="gallery-item flex flex-col rounded-md"
-              data-pswp-width={image.metadata.width}
-              data-pswp-height={image.metadata.height}
-              itemscope
-              itemtype="https://schema.org/ImageObject"
+  <div class="mx-auto w-11/12">
+    <div id="gallery" class="z-0 mb-12">
+      {
+        images.map((image) => (
+          <a
+            href={image.originalPath}
+            class="gallery-item flex flex-col rounded-md"
+            data-pswp-width={image.metadata.width}
+            data-pswp-height={image.metadata.height}
+            itemscope
+            itemtype="https://schema.org/ImageObject"
+            style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
+          >
+            <figure
+              class="rounded-md"
               style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
             >
-              <figure
+              <Image
                 class="rounded-md"
-                style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
-              >
-                <Image
-                  class="rounded-md"
-                  src={image.metadata}
-                  alt={`Image in ${albumName}`}
-                  loading="lazy"
-                  decoding="async"
-                  width={600}
-                  style="width: 100%; height: auto"
-                />
-              </figure>
-            </a>
-          ))
-        }
-      </div>
+                src={image.metadata}
+                alt={`Image in ${albumName}`}
+                loading="lazy"
+                decoding="async"
+                width={600}
+                style="width: 100%; height: auto"
+              />
+            </figure>
+          </a>
+        ))
+      }
     </div>
   </div>
   <script src="../../scripts/post.js"></script>
