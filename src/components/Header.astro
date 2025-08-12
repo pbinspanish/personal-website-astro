@@ -2,8 +2,7 @@
 import HeaderLink from "./HeaderLink.astro";
 import MobileHeaderLink from "./MobileHeaderLink.astro";
 import Centered from "./Centered.astro";
-
-import ThemePicker from "./react/ThemePicker.jsx";
+import ThemePicker from "./ThemePicker.astro";
 
 import { Menu, X } from "@lucide/astro";
 ---
@@ -27,7 +26,7 @@ import { Menu, X } from "@lucide/astro";
         </ul>
       </div>
 
-      <ThemePicker client:only="react" />
+      <ThemePicker />
 
       <div class="my-3 ms-4 flex items-center md:hidden">
         <button

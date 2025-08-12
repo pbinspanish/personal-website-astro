@@ -1,0 +1,50 @@
+---
+import { SunMoon, ChevronDown, Check, Sun, Moon } from "@lucide/astro";
+---
+
+<div class="relative ms-4 flex items-stretch">
+  <button
+    type="button"
+    class="inline-flex cursor-pointer items-center justify-center hover:text-cyan-400 hover:dark:text-cyan-600"
+    id="theme-menu-button"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    <SunMoon class="inline h-5 w-5" id="auto-theme-icon" />
+    <Sun class="hidden h-5 w-5" id="light-theme-icon" />
+    <Moon class="hidden h-5 w-5" id="dark-theme-icon" />
+
+    <ChevronDown class="ms-1 inline h-4 w-4" />
+  </button>
+  <div
+    id="theme-menu"
+    class="bg-base-50 dark:bg-base-900 absolute right-0 z-100 mt-10 hidden min-w-32 rounded-md shadow-md"
+  >
+    <fieldset id="theme-picker" class="flex flex-col py-2">
+      <label
+        class="hover:bg-base-150 dark:hover:bg-base-850 flex cursor-pointer items-center justify-start px-4 py-2 hover:text-cyan-400 hover:dark:text-cyan-600"
+      >
+        <input class="hidden" name="theme" type="radio" value="auto" checked />
+        <SunMoon class="me-2 h-4 w-4" />
+        Auto
+        <Check id="auto-check" class="ms-auto h-4 w-4" />
+      </label>
+      <label
+        class="hover:bg-base-150 dark:hover:bg-base-850 flex cursor-pointer items-center px-4 py-2 hover:text-cyan-400 hover:dark:text-cyan-600"
+      >
+        <input class="hidden" name="theme" type="radio" value="light" />
+        <Sun class="me-2 h-4 w-4" />
+        Light
+        <Check id="light-check" class="invisible ms-auto h-4 w-4" />
+      </label>
+      <label
+        class="hover:bg-base-150 dark:hover:bg-base-850 flex cursor-pointer items-center px-4 py-2 hover:text-cyan-400 hover:dark:text-cyan-600"
+      >
+        <input class="hidden" name="theme" type="radio" value="dark" />
+        <Moon class="me-2 h-4 w-4" />
+        Dark
+        <Check id="dark-check" class="invisible ms-auto h-4 w-4" />
+      </label>
+    </fieldset>
+  </div>
+</div>
