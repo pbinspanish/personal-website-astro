@@ -20,11 +20,9 @@ const today = new Date();
                 href={link.url}
                 target="_blank"
                 title={link.title}
-                class="text-decoration-none pe-4"
+                class="text-decoration-none pe-3"
               >
-                <div class="h-5 w-5 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600">
-                  <link.icon />
-                </div>
+                <link.icon class="h-6 w-6 transition-colors duration-150 ease-in-out before:text-xl hover:text-cyan-400 hover:dark:text-cyan-600" />
               </a>
             ))
           }
