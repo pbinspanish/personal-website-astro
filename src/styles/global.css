@@ -323,6 +323,8 @@
 #content table {
   border-collapse: collapse;
   border-style: hidden;
+
+  margin-bottom: 1rem;
 }
 
 #content table td,
