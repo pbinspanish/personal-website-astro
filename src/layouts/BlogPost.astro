@@ -1,5 +1,6 @@
 ---
 import BaseCenteredTitle from "../components/BaseCenteredTitle.astro";
+import Tag from "../components/Tag.astro";
 
 import type { CollectionEntry } from "astro:content";
 
@@ -10,19 +11,24 @@ const { title, date, language, tags, draft } = Astro.props;
 
 <BaseCenteredTitle title={title} lang={language}>
   <!-- Metadata -->
-  <div
-    class={(date === undefined ? "hidden" : "") +
-      " text-base-600 dark:text-base-500 mb-12"}
-  >
-    {
-      date === undefined
-        ? ""
-        : date.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })
-    }
+  <div class="mb-12 flex flex-row items-center justify-between">
+    <div
+      class={(date === undefined ? "hidden" : "") +
+        " text-base-600 dark:text-base-500"}
+    >
+      {
+        date === undefined
+          ? ""
+          : date.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+      }
+    </div>
+    <div class="ms-4 flex flex-row align-middle">
+      {tags.map((tag) => <Tag tag={tag} />)}
+    </div>
   </div>
 
   <!-- Content -->
