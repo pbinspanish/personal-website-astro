@@ -10,7 +10,7 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 ---
 
 <a
-  href="{{ .URL }}"
+  href={href}
   class="block border-y-4 border-y-transparent py-2 text-base font-medium transition-colors duration-150 ease-in-out hover:border-b-cyan-400 hover:text-cyan-400 hover:dark:border-b-cyan-600 hover:dark:text-cyan-600"
   aria-current="page"
 >
