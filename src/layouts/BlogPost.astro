@@ -11,11 +11,11 @@ const { title, date, language, tags, draft } = Astro.props;
 
 <BaseCenteredTitle title={title} lang={language}>
   <!-- Metadata -->
-  <div class="mb-12 flex flex-row items-center justify-between">
-    <div
-      class={(date === undefined ? "hidden" : "") +
-        " text-base-600 dark:text-base-500"}
-    >
+  <div
+    class={(date === undefined ? "hidden" : "") +
+      " mb-12 flex flex-row items-center justify-between"}
+  >
+    <div class="text-base-600 dark:text-base-500">
       {
         date === undefined
           ? ""

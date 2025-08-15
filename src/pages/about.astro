@@ -3,13 +3,7 @@ import Layout from "../layouts/BlogPost.astro";
 import AboutHeroImage from "../assets/about.jpg";
 ---
 
-<Layout
-  title="About"
-  description="Lorem ipsum dolor sit amet"
-  pubDate={new Date("August 08 2021")}
-  showDate={false}
-  heroImage={AboutHeroImage}
->
+<Layout title="About" language="en" tags={[]} draft={false}>
   <img src={AboutHeroImage.src} />
   <p>
     Photo by <a
