@@ -59,4 +59,4 @@ Serves 6.
 
 # Original Recipe
 
-![Picture of a recipe.](recipe.jpg)
+![Picture of a recipe.](scalloped-potatoes/recipe.jpg)

@@ -11,14 +11,14 @@ Digital cameras have a feature called auto white balance which I feel is a rathe
 
 Auto white balance is a feature that attempts to neutralize the colours in an image to prevent any sort of strong colour cast. Take the follow image I shot in Switzerland as an example:
 
-![Split image of a tower in Switzerland. The left image looks cooler than the right image.](ae230c8f7e8a9bea2374a965013f283f_MD5.jpg)
+![Split image of a tower in Switzerland. The left image looks cooler than the right image.](you-cant-trust-auto-white-balance/ae230c8f7e8a9bea2374a965013f283f_MD5.jpg)
 _Left: Daylight (5500K). Right: Auto (6100K). The image on the left appears closer to how it looked in person._
 
 The image as shot has a bit of a cool blue/green cast, while when corrected with auto white balance the image becomes a lot warmer to neutralize the colours overall. Personally, I find the left image to be much more pleasing to the eye, and it also happens to look much closer to my memory of it when I shot the image.
 
 Auto white balance is particularly useful when balancing skin tones, as humans tend to be very sensitive to skin tones that look off.
 
-![Split image of a male. The left image looks warmer than the right image.](fd3c5d9754d096b2aaf5f4150ab3b93c_MD5.jpg)
+![Split image of a male. The left image looks warmer than the right image.](you-cant-trust-auto-white-balance/fd3c5d9754d096b2aaf5f4150ab3b93c_MD5.jpg)
 _Left: Daylight (5500K). Right: Auto (4200K). Also note that the tint (green/magenta) is different between the two images, not just the colour temperature._
 
 In this case I find the auto image to be more pleasing to look at as I feel it more correctly captures my skin tones. It also is a closer match to my memory, but part of that is that our brains also perform a form of auto white balance with our vision.
