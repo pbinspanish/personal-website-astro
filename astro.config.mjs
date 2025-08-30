@@ -11,6 +11,7 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: "https://www.josiahhenson.ca",
   integrations: [mdx(), sitemap(), react()],
+  outDir: "J:/website",
 
   vite: {
     plugins: [tailwindcss()],
