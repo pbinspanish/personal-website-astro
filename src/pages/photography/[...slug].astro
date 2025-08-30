@@ -1,73 +1,103 @@
 ---
-import path from "node:path";
-
-import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 
 import Base from "../../components/Base.astro";
 import Centered from "../../components/Centered.astro";
 import Title from "../../components/Title.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const images = import.meta.glob<{ default: ImageMetadata }>(
+  const meta = await getCollection("photography");
+  const imagePromises = import.meta.glob<{ default: ImageMetadata }>(
     "/src/content/photography/**/*.{jpg,jpeg}",
   );
 
-  const albums = new Map<
-    string,
-    {
-      images: { originalPath: string; metadata: ImageMetadata }[];
-      subAlbums: Set<string>;
-    }
-  >();
+  const images = new Map<string, ImageMetadata>();
+  for (const imagePath in imagePromises) {
+    const imageData = await imagePromises[imagePath]();
 
-  for (const imagePath in images) {
-    const imageData = await images[imagePath]();
+    images.set(imagePath, imageData.default);
+  }
 
-    // "/src/content/photography/2025/2025-06-20 - Luke's Grad/P1160636.jpg"
-    // -> ["2025", "2025-06-20 - Luke's Grad", "P1160636.jpg"]
-    const albumPathParts = imagePath.split("/").slice(4);
-    const imageFileName = albumPathParts.pop();
-    const albumSlug = albumPathParts.join("/");
+  const childMap = meta.reduce(
+    (acc, entry) => {
+      const parentId = entry.data.parent;
+      const childSlug = entry.id.split("/").slice(0, -1).join("/");
 
-    // Get or update information about the current album
-    let currentAlbumData = albums.get(albumSlug);
-    if (!currentAlbumData) {
-      currentAlbumData = { images: [], subAlbums: new Set() };
-      albums.set(albumSlug, currentAlbumData);
-    }
-    currentAlbumData.images.push({
-      originalPath: imagePath,
-      metadata: imageData.default,
-    });
-
-    // Register the album with its parent(s)
-    while (albumPathParts.length > 0) {
-      const parentSlug = albumPathParts.slice(0, -1).join("/");
-      let parentAlbumData = albums.get(parentSlug);
-      if (!parentAlbumData) {
-        parentAlbumData = { images: [], subAlbums: new Set() };
-        albums.set(parentSlug, parentAlbumData);
+      if (parentId) {
+        if (!acc[parentId]) {
+          acc[parentId] = [];
+        }
+        acc[parentId].push(childSlug);
       }
 
-      parentAlbumData.subAlbums.add(albumPathParts[albumPathParts.length - 1]);
+      return acc;
+    },
+    {} as Record<string, string[]>,
+  );
 
-      albumPathParts.pop();
-    }
-  }
+  // create the list of slugs and params to generate
   const pages = [];
-  for (const [slug, data] of albums.entries()) {
-    const albumName = slug.split("/").pop() || "Photography";
+
+  //top level page
+  const topLevelAlbums = meta
+    .filter((album) => album.data.parent === undefined)
+    .map((album) => ({
+      name: album.data.title,
+      url: `/photography/${album.id.split("/").slice(0, -1).join("/")}`,
+      thumb: images
+        .entries()
+        .find((value) => value[0].endsWith(album.data.cover))?.[1],
+    }));
+  console.log(topLevelAlbums);
+
+  pages.push({
+    params: { slug: "/" },
+    props: {
+      albumName: "Photography",
+      images: [],
+      subAlbums: topLevelAlbums,
+    },
+  });
+
+  // all albums
+  for (const album of meta) {
+    const albumPath =
+      "/src/content/photography/" + album.id.split("/").slice(0, -1).join("/");
+
+    // filter images
+    const albumImages = Array.from(images.entries())
+      .filter(
+        ([imagePath, metadata]) =>
+          imagePath.split("/").slice(0, -1).join("/") === albumPath,
+      )
+      .map(([imagePath, metadata]) => metadata);
+
+    const subAlbums = (childMap[album.data.id] || []).map((childSlug) => ({
+      name: meta.find(
+        (e) => e.id.split("/").at(-2) === childSlug.split("/").at(-1),
+      )?.data.title,
+      url: `/photography/${childSlug}`,
+      thumb: images
+        .entries()
+        .find((value) =>
+          value[0].endsWith(
+            meta.find(
+              (e) => e.id.split("/").at(-2) === childSlug.split("/").at(-1),
+            )?.data.cover || "",
+          ),
+        )?.[1],
+    }));
+
+    console.log(subAlbums);
 
     pages.push({
-      params: { slug: slug || undefined },
+      params: { slug: album.id.split("/").slice(0, -1).join("/") },
       props: {
-        albumName: albumName,
-        images: data.images,
-        subAlbums: Array.from(data.subAlbums).map((name) => ({
-          name: name,
-          url: `/photography/${path.posix.join(slug, name)}`,
-        })),
+        albumName: album.data.title,
+        images: albumImages,
+        subAlbums: subAlbums,
       },
     });
   }
@@ -77,11 +107,8 @@ export async function getStaticPaths() {
 
 interface Props {
   albumName: string;
-  images: {
-    originalPath: string;
-    metadata: ImageMetadata;
-  }[];
-  subAlbums: { name: string; url: string }[];
+  images: ImageMetadata[];
+  subAlbums: { name: string; url: string; thumb: ImageMetadata }[];
 }
 
 const { albumName, images, subAlbums } = Astro.props;
@@ -101,16 +128,17 @@ const { albumName, images, subAlbums } = Astro.props;
                 title={album.name}
               >
                 <figure class="aspect-3/2 w-full rounded-2xl">
-                  <img
+                  <Image
                     class="aspect-3/2 w-full overflow-hidden rounded-2xl object-cover"
-                    src="THUMBNAIL LINK"
+                    src={album.thumb}
+                    alt={`Image thumbnail.`}
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
                   />
                 </figure>
                 <div class="flex shrink-1 grow-1 basis-auto flex-col gap-3 p-4">
                   <h2 class="text-lg/5 font-bold">{album.name}</h2>
-                  <span class="text-base-600 dark:text-base-500 text-sm/6">
-                    10 photos OR 120 photos in 3 albums
-                  </span>
                 </div>
               </a>
             ))}
@@ -125,21 +153,21 @@ const { albumName, images, subAlbums } = Astro.props;
       {
         images.map((image) => (
           <a
-            href={image.originalPath}
+            href={image.src}
             class="gallery-item flex flex-col rounded-md"
-            data-pswp-width={image.metadata.width}
-            data-pswp-height={image.metadata.height}
+            data-pswp-width={image.width}
+            data-pswp-height={image.height}
             itemscope
             itemtype="https://schema.org/ImageObject"
-            style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
+            style={`aspect-ratio: ${image.width} / ${image.height};`}
           >
             <figure
               class="rounded-md"
-              style={`aspect-ratio: ${image.metadata.width} / ${image.metadata.height};`}
+              style={`aspect-ratio: ${image.width} / ${image.height};`}
             >
               <Image
                 class="rounded-md"
-                src={image.metadata}
+                src={image}
                 alt={`Image in ${albumName}`}
                 loading="lazy"
                 decoding="async"

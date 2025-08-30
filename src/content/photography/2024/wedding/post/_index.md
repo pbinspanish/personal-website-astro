@@ -1,7 +1,8 @@
 ---
 title: Post-Ceremony
 date: 2024-05-18
-cover: thumb.jpg
-url: photos/2024/wedding/post
+cover: DSC08951.jpg
 weight: 3
+id: post
+parent: ee-wedding
 ---
