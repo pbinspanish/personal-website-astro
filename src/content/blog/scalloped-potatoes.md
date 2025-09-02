@@ -5,6 +5,7 @@ language: en
 tags:
   - recipe
 draft: false
+justify: false
 ---
 
 # Ingredients

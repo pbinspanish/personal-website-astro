@@ -6,6 +6,7 @@ tags:
   - movie
   - review
 draft: false
+justify: true
 ---
 
 _Three Thousand Years of Longing_ is, in classic George Miller fashion, a visual treat that contains a lot of heart, with a compelling romance at its core and enthralling vignettes of a Djinn's life that make for an enriching, thought provoking experience of a movie. Seldom do I feel compelled to analyze a movie immediately after watching it, and yet here am I doing just that. Do yourself a favour and lock yourself in a dark room and watch this movie, pay attention, and I believe you will be rewarded with while not a perfect experience, a wholly gratifying one that is at the very least a treat for the eyes and the ears.

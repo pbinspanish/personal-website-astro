@@ -6,7 +6,7 @@ import type { CollectionEntry } from "astro:content";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, date, language, tags, draft } = Astro.props;
+const { title, date, language, tags, draft, justify } = Astro.props;
 ---
 
 <BaseCenteredTitle title={title} lang={language}>
@@ -35,7 +35,7 @@ const { title, date, language, tags, draft } = Astro.props;
   <!-- Content -->
   <div
     id="content"
-    class="mb-12 text-justify text-lg/6 text-pretty hyphens-auto md:text-xl/7"
+    class=`mb-12 ${justify ? "text-justify" : "text-left"} text-lg/6 text-pretty hyphens-auto md:text-xl/7`
   >
     <slot />
   </div>

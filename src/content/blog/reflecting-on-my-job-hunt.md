@@ -5,6 +5,7 @@ language: en
 tags:
   - reflection
 draft: false
+justify: true
 ---
 
 I graduated from the University of Windsor a with a degree in Computer Science this spring, and after getting back from a month-long trip to Europe in May I started doing the natural thing which is looking for a job. What I had expected to be a process that would take a couple weeks ended up taking me three months instead, and I want to take a moment to talk a bit about why that is.

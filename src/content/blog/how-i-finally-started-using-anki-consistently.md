@@ -5,6 +5,7 @@ language: en
 tags:
   - productivity
 draft: false
+justify: true
 ---
 
 I have started and failed to continue using Anki around 4 or 5 times in my life, and it wasn't until I started using it about a year ago that it finally stuck.
