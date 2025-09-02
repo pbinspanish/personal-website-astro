@@ -57,3 +57,11 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <script src="../scripts/theme-picker.js"></script>
 <script src="../scripts/mobile-menu.js"></script>
+
+<!-- RSS -->
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Josiah Henson's Blog"
+  href={new URL("rss.xml", Astro.site)}
+/>

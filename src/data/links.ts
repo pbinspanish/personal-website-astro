@@ -8,6 +8,7 @@ import {
   Linkedin,
   Film,
   Youtube,
+  Rss,
 } from "@lucide/astro";
 
 export interface LinkProps {
@@ -65,5 +66,11 @@ export const LinkData: LinkProps[] = [
     title: "Youtube",
     description: "My explorations of the motion visual medium.",
     url: "https://youtube.com/@pbinspanish",
+  },
+  {
+    icon: Rss,
+    title: "RSS",
+    description: "RSS feed of the blog posts.",
+    url: "rss.xml",
   },
 ];
