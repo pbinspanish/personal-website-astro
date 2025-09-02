@@ -271,7 +271,7 @@ html[data-theme="dark"] .pswp__counter {
   color: var(--color-base-600);
 }
 
-#content > hr[data-theme="dark"] {
+html[data-theme="dark"] #content > hr {
   color: var(--color-base-700);
 }
 
@@ -353,6 +353,7 @@ html[data-theme="dark"] .pswp__counter {
 
 #content .astro-code {
   padding: 1rem 1.5rem 1rem 1.5rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: var(--radius-lg);
 
@@ -361,18 +362,11 @@ html[data-theme="dark"] .pswp__counter {
   line-height: calc(var(--spacing) * 5);
 }
 
-/* TODO: Make the themes actually change on theme change */
-#content .astro-code,
-#content .astro-code span {
+html[data-theme="dark"] #content .astro-code,
+html[data-theme="dark"] #content .astro-code span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
 }
-
-/* #content[data-theme="dark"] .astro-code,
-#content[data-theme="dark"] .astro-code span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-} */
 
 #content table {
   border-collapse: collapse;
@@ -399,7 +393,7 @@ html[data-theme="dark"] .pswp__counter {
   color: var(--color-base-950);
 }
 
-#content > p[data-theme="dark"] > mark {
+html[data-theme="dark"] #content > p > mark {
   background-color: var(--color-yellow-600);
   color: var(--color-base-50);
 }
