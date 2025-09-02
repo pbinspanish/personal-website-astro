@@ -230,11 +230,35 @@ html[data-theme="dark"] .pswp--custom {
 }
 
 .pswp--custom svg {
-  filter: drop-shadow(0px 0px 2px var(--color-paper));
+  filter: drop-shadow(1px 0px 0px var(--color-paper))
+    drop-shadow(-1px 0px 0px var(--color-paper))
+    drop-shadow(0px 1px 0px var(--color-paper))
+    drop-shadow(0px -1px 0px var(--color-paper));
 }
 
 html[data-theme="dark"] .pswp--custom svg {
-  filter: drop-shadow(0px 0px 2px var(--color-black));
+  filter: drop-shadow(1px 0px 0px var(--color-black))
+    drop-shadow(-1px 0px 0px var(--color-black))
+    drop-shadow(0px 1px 0px var(--color-black))
+    drop-shadow(0px -1px 0px var(--color-black));
+}
+
+.pswp__counter {
+  font-size: var(--text-lg) !important;
+  font-weight: bold !important;
+  text-shadow: none !important;
+
+  filter: drop-shadow(1px 0px 0px var(--color-paper))
+    drop-shadow(-1px 0px 0px var(--color-paper))
+    drop-shadow(0px 1px 0px var(--color-paper))
+    drop-shadow(0px -1px 0px var(--color-paper));
+}
+
+html[data-theme="dark"] .pswp__counter {
+  filter: drop-shadow(1px 0px 0px var(--color-black))
+    drop-shadow(-1px 0px 0px var(--color-black))
+    drop-shadow(0px 1px 0px var(--color-black))
+    drop-shadow(0px -1px 0px var(--color-black));
 }
 
 /* 
