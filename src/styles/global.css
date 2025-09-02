@@ -379,6 +379,8 @@ html[data-theme="dark"] .pswp__counter {
   border-style: hidden;
 
   margin-bottom: 1rem;
+
+  font-size: var(--text-lg);
 }
 
 #content table td,
