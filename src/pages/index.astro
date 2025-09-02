@@ -1,39 +1,129 @@
 ---
 import Base from "../components/Base.astro";
+import Centered from "../components/Centered.astro";
+import Title from "../components/Title.astro";
+import BlogPostList from "../components/BlogPostList.astro";
+
+import { Image } from "astro:assets";
+import heroImage from "../assets/hero.jpg";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort(
+    (a, b) =>
+      (b.data.date === undefined ? 0 : b.data.date.valueOf()) -
+      (a.data.date === undefined ? 0 : a.data.date.valueOf()),
+  )
+  .slice(0, 3);
+
+const imagePromises = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/content/home/**/*.{jpg,jpeg}",
+);
+
+const images = new Map<string, ImageMetadata>();
+for (const imagePath in imagePromises) {
+  const imageData = await imagePromises[imagePath]();
+
+  images.set(imagePath, imageData.default);
+}
 ---
 
 <Base lang="en">
-  <div
-    class="h-full flex-1 items-stretch bg-[url('/images/hero.jpg')] bg-cover bg-[17%_40%] bg-no-repeat"
-  >
-    <div class="container mx-auto flex h-full items-stretch">
-      <div class="flex w-full items-end justify-end lg:items-center">
-        <div
-          class="bg-paper mx-8 mb-12 w-full rounded-lg p-8 shadow-lg lg:w-1/2 dark:bg-black"
-        >
-          <h1 class="mb-4 text-4xl font-bold">Josiah Henson</h1>
-          <p class="mb-2 text-xl">
-            I'm a Computer Science graduate from the University of Windsor who
-            has a passion for technology, software, and creating useful things.
-            I'm always looking for opportunities to help people solve real
-            problems through the software I create, and it's even better if I
-            get to chew on a fun technical problem to get there. Outside of
-            tech, I love reading, being behind a camera, on my bike, or playing
-            soccer. I'm constantly looking for opportunities to improve myself
-            physically and mentally, and to connect and share with others.
-          </p>
+  <Centered>
+    <div
+      id="content"
+      class="mb-12 text-justify text-lg/6 text-pretty hyphens-auto md:text-xl/7"
+    >
+      <!-- image of myself -->
+      <Image
+        class="mt-12 mb-4 rounded-xl"
+        src={heroImage}
+        alt="An image of a man."
+        width={1280}
+      />
+      <em class="text-lg"
+        >Photo by <a
+          class="underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="https://yashnilay.ca">Yash Patel</a
+        ></em
+      >
 
-          <p class="text-xl">
-            I'm open for software development related positions. If you have
-            something you think I would be a good fit for, feel free to reach
-            out to my email
-            <a
-              class="underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
-              href="mailto:JosiahJ.H@outlook.com">here</a
-            >.
-          </p>
-        </div>
-      </div>
+      <hr />
+
+      <!-- some overview of myself -->
+      <Title title="Josiah Henson" />
+      <p class="mb-2 text-xl">
+        I have a Bachelor's in Computer science from the University of Windsor
+        and I'm interested in technology, software, and creating useful things.
+        I'm always looking for opportunities to help people solve real problems
+        through the software I create, and it's even better if I get to chew on
+        a fun technical problem to get there. Outside of tech, I love reading,
+        being behind a camera, on my bike, or playing soccer. I'm constantly
+        looking for opportunities to improve myself physically and mentally, and
+        to connect and share with others.
+      </p>
+
+      <p class="text-xl">
+        If you have an interesting opportunity to send my way, or if you'd like
+        to chat about any of my work, feel free to send me an email
+        <a
+          class="underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="mailto:JosiahJ.H@outlook.com">here</a
+        >.
+      </p>
+
+      <!-- latest three blog posts -->
+      <h2 class="mt-12 mb-4 text-xl font-bold">Latest Posts</h2>
+      <BlogPostList posts={posts} />
+      <a
+        class="text-xl underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+        href="/blog">More Posts</a
+      >
+
+      <!-- photography sample -->
+      <h2 class="mt-12 mb-4 text-xl font-bold">Photography</h2>
+      <p class="mb-2 text-xl">
+        I'm a hobbyist photographer who enjoys taking pictures of the people and
+        places in my life. See a sample below, or check out my <a
+          class="underline underline-offset-2 transition-colors duration-150 ease-in-out hover:text-cyan-400 hover:dark:text-cyan-600"
+          href="/photography">gallery</a
+        >.
+      </p>
+    </div>
+  </Centered>
+
+  <div class="mx-auto w-11/12">
+    <div id="gallery" class="z-0 mb-12">
+      {
+        images.values().map((image) => (
+          <a
+            href={image.src}
+            class="gallery-item flex flex-col rounded-md"
+            data-pswp-width={image.width}
+            data-pswp-height={image.height}
+            itemscope
+            itemtype="https://schema.org/ImageObject"
+            style={`aspect-ratio: ${image.width} / ${image.height};`}
+          >
+            <figure
+              class="rounded-md"
+              style={`aspect-ratio: ${image.width} / ${image.height};`}
+            >
+              <Image
+                class="rounded-md"
+                src={image}
+                alt={`Image`}
+                loading="lazy"
+                decoding="async"
+                width={600}
+                style="width: 100%; height: auto"
+              />
+            </figure>
+          </a>
+        ))
+      }
     </div>
   </div>
+  <script src="../scripts/post.js"></script>
 </Base>
