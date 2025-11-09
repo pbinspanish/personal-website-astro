@@ -71,6 +71,6 @@ export const LinkData: LinkProps[] = [
     icon: Rss,
     title: "RSS",
     description: "RSS feed of the blog posts.",
-    url: "rss.xml",
+    url: "/rss.xml",
   },
 ];
