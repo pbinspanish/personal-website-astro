@@ -397,3 +397,27 @@ html[data-theme="dark"] #content > p > mark {
   background-color: var(--color-yellow-600);
   color: var(--color-base-50);
 }
+
+#content > blockquote {
+  border-left: var(--color-light-tx-3) 0.25rem solid;
+  background-color: var(--color-light-bg-2);
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+  padding-right: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+html[data-theme="dark"] #content > blockquote {
+  border-left-color: var(--color-dark-tx-3);
+  background-color: var(--color-dark-bg-2);
+}
+
+#content > blockquote > p {
+  color: var(--color-light-tx);
+}
+
+html[data-theme="dark"] #content > blockquote > p {
+  color: var(--color-dark-tx);
+}
